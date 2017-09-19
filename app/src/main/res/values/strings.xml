@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">newz</string>
+
+    <string name="title_source_activity">Newz</string>
+    <string name="title_article_activity">Articles</string>
+
+    <string name="content_authority">com.ucon.newz</string>
+    <string name="search">Search by Title</string>
+    <string name="search_action_menu">Search</string>
+
+    <!--SAMPLE STRING-->
+    <string name="source_dummy_bbc">BBC</string>
+    <string name="source_desc_dummy_bbc">News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.</string>
+    <string name="source_dummy_date_bbc">2017-09-08T06:09:30Z</string>
+    <string name="source_dummy_title_bbc">Investors, staff, Matthew Hayden dudded in boutique whisky collapse</string>
+</resources>
