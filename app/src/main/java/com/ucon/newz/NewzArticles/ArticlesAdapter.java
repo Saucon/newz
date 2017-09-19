@@ -13,9 +13,11 @@ import com.bumptech.glide.Glide;
 import com.ucon.newz.NewsSources.SourcesAdapter;
 import com.ucon.newz.NewzUtillities.NewzDateUtil;
 import com.ucon.newz.R;
+import com.ucon.newz.data.Articles;
 import com.ucon.newz.data.local.NewzDBContract;
 
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * Created by saucon on 9/9/17.
@@ -24,7 +26,7 @@ import java.text.ParseException;
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticlesAdapterViewHolder> {
     private Context mContext;
 
-    private Cursor mCursor;
+    private List<Articles> mCursor;
 
     final private ArticlesAdapterOnClickHandler mClickHandler;
 
@@ -45,14 +47,13 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
 
     @Override
     public void onBindViewHolder(ArticlesAdapterViewHolder holder, int position) {
-        if(mCursor.getCount() > 0){
-            mCursor.moveToPosition(position);
+        if(mCursor.size() > 0){
 
-            String title = mCursor.getString(mCursor.getColumnIndex(NewzDBContract.ArticlesEntry.COLUMN_TITLE));
-            String desc = mCursor.getString(mCursor.getColumnIndex(NewzDBContract.ArticlesEntry.COLUMN_DESC));
-            String sourceid = mCursor.getString(mCursor.getColumnIndex(NewzDBContract.ArticlesEntry.COLUMN_SOURCE_ID));
-            String urlImage = mCursor.getString(mCursor.getColumnIndex(NewzDBContract.ArticlesEntry.COLUMN_IMAGE));
-            long date = mCursor.getLong(mCursor.getColumnIndex(NewzDBContract.ArticlesEntry.COLUMN_DATE));
+            String title = mCursor.get(position).getTitle();
+            String desc = mCursor.get(position).getDescription();
+            String sourceid = mCursor.get(position).getSourceId();
+            String urlImage = mCursor.get(position).getUrlToImage();
+            long date = mCursor.get(position).getPublishedAt();
 
             holder.titleArticleTextView.setText(title);
             holder.descArticleTextView.setText(desc);
@@ -68,10 +69,10 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+        return mCursor.size();
     }
 
-    void swapCursor(Cursor cursor){
+    void swapCursor(List<Articles> cursor){
         mCursor = cursor;
         notifyDataSetChanged();
     }
@@ -99,8 +100,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            mCursor.moveToPosition(adapterPosition);
-            String url = mCursor.getString(mCursor.getColumnIndex(NewzDBContract.ArticlesEntry.COLUMN_URL));
+            String url = mCursor.get(adapterPosition).getUrl();
             mClickHandler.onClick(url);
         }
     }

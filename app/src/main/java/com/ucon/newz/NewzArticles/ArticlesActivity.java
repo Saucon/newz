@@ -23,10 +23,12 @@ import android.widget.ProgressBar;
 
 import com.ucon.newz.Injection;
 import com.ucon.newz.R;
+import com.ucon.newz.data.Articles;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ArticlesActivity extends AppCompatActivity implements ArticlesContract.View, ArticlesAdapter.ArticlesAdapterOnClickHandler {
 
@@ -157,8 +159,8 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
     }
 
     @Override
-    public void loadArticlesView(Cursor cursor) {
-        Log.d("test cursor", cursor.getCount()+"");
+    public void loadArticlesView(List<Articles> cursor) {
+        Log.d("test cursor", cursor.size()+"");
         progressBar.setVisibility(View.GONE);
         mArticlesAdapter.swapCursor(cursor);
         mArticlesRecyclerView.setAdapter(mArticlesAdapter);

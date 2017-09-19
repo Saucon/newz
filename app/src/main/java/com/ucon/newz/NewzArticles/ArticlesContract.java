@@ -4,10 +4,12 @@ import android.database.Cursor;
 
 import com.ucon.newz.BasePresenter;
 import com.ucon.newz.BaseView;
+import com.ucon.newz.data.Articles;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by saucon on 9/9/17.
@@ -15,7 +17,7 @@ import java.io.IOException;
 
 public interface ArticlesContract {
     interface View extends BaseView<ArticlesContract.Presenter>{
-        void loadArticlesView(Cursor cursor);
+        void loadArticlesView(List<Articles> cursor);
         void stopRefreshView();
     }
 

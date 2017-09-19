@@ -2,12 +2,14 @@ package com.ucon.newz.NewzArticles;
 
 import android.database.Cursor;
 
+import com.ucon.newz.data.Articles;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.NewzRepository;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by saucon on 9/9/17.
@@ -40,7 +42,7 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
     public void loadArticles() throws IOException, JSONException {
         mNewzRepository.getArticles(new NewsDataRepository.LoadArticlesCallback() {
             @Override
-            public void OnTaskLoaded(Cursor cursor) throws IOException, JSONException {
+            public void OnTaskLoaded(List<Articles> cursor) throws IOException, JSONException {
                 mArticlesView.loadArticlesView(cursor);
             }
         },this.getmSourceID(),this.getmSortBy());
@@ -50,7 +52,7 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
     public void loadArticlesRemote() throws IOException, JSONException {
         mNewzRepository.getArticlesRemoteOnly(new NewsDataRepository.LoadArticlesCallback() {
             @Override
-            public void OnTaskLoaded(Cursor cursor) throws IOException, JSONException {
+            public void OnTaskLoaded(List<Articles> cursor) throws IOException, JSONException {
                 mArticlesView.loadArticlesView(cursor);
                 mArticlesView.stopRefreshView();
             }
@@ -65,7 +67,7 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
         }
         mNewzRepository.getArticlesFromSearch(new NewsDataRepository.LoadArticlesCallback() {
             @Override
-            public void OnTaskLoaded(Cursor cursor) throws IOException, JSONException {
+            public void OnTaskLoaded(List<Articles> cursor) throws IOException, JSONException {
                 mArticlesView.loadArticlesView(cursor);
             }
         },this.getmSourceID(),this.getmSortBy(),this.getTitleQuery());

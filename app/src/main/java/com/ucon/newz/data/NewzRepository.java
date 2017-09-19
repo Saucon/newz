@@ -60,8 +60,8 @@ public class NewzRepository implements NewsDataRepository, NewsDataRepository.Ne
     public void getArticles(@NonNull final LoadArticlesCallback loadSourceCallback, final String sourceID, final String sortby) throws IOException, JSONException {
         mNewzLocalDataSource.getArticles(new LoadArticlesCallback() {
             @Override
-            public void OnTaskLoaded(Cursor cursor) throws IOException, JSONException {
-                if(cursor.getCount() <= 0){
+            public void OnTaskLoaded(List<Articles> cursor) throws IOException, JSONException {
+                if(cursor.size() <= 0){
                     getArticleRemote(loadSourceCallback,sourceID,sortby);
                 }else {
                     loadSourceCallback.OnTaskLoaded(cursor);
@@ -74,7 +74,7 @@ public class NewzRepository implements NewsDataRepository, NewsDataRepository.Ne
     public void getArticlesFromSearch(@NonNull final LoadArticlesCallback loadSourceCallback, String sourceID, String sortby, String title) throws IOException, JSONException {
         mNewzLocalDataSource.getArticlesFromSearch(new LoadArticlesCallback() {
             @Override
-            public void OnTaskLoaded(Cursor cursor) throws IOException, JSONException {
+            public void OnTaskLoaded(List<Articles> cursor) throws IOException, JSONException {
                 loadSourceCallback.OnTaskLoaded(cursor);
             }
         },sourceID,sortby,title);
@@ -103,7 +103,7 @@ public class NewzRepository implements NewsDataRepository, NewsDataRepository.Ne
     private void getArticleRemote(@NonNull final LoadArticlesCallback loadSourceCallback, String sourceId, String sortBy) throws IOException, JSONException {
         mNewzRemoteDataSource.getArticles(new LoadArticlesCallback() {
             @Override
-            public void OnTaskLoaded(Cursor cursor) throws IOException, JSONException {
+            public void OnTaskLoaded(List<Articles> cursor) throws IOException, JSONException {
                 loadSourceCallback.OnTaskLoaded(cursor);
             }
         },sourceId,sortBy);
