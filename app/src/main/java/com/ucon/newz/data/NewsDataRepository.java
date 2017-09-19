@@ -40,7 +40,7 @@ public interface NewsDataRepository {
     }
 
     interface LoadArticlesCallback{
-        void OnTaskLoaded (Cursor cursor) throws IOException, JSONException;
+        void OnTaskLoaded (List<Articles> cursor) throws IOException, JSONException;
     }
 
     void getSources(@NonNull LoadSourceCallback loadSourceCallback) throws IOException, JSONException;

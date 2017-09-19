@@ -1,5 +1,12 @@
 package com.ucon.newz.data;
 
+import android.database.Cursor;
+
+import com.ucon.newz.data.local.NewzDBContract;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by saucon on 9/14/17.
  */
@@ -49,5 +56,21 @@ public class Sources {
 
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
+    }
+
+    public static List<Sources> getSourcesList(Cursor cursor){
+        List<Sources> sourcesList = new ArrayList<>();
+        if(cursor!=null || cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                int _ID = cursor.getInt(cursor.getColumnIndex(NewzDBContract.SourceEntry._ID));
+                String name = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_NAME));
+                String desc = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_DESC));
+                String sourceId = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_SOURCE_ID));
+                Sources sources = new Sources(_ID, name, desc, sourceId);
+                sourcesList.add(sources);
+            }
+            cursor.close();
+        }
+        return sourcesList;
     }
 }

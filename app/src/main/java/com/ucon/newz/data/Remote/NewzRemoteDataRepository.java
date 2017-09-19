@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.ucon.newz.NewzUtillities.NetworkUtils;
 import com.ucon.newz.NewzUtillities.NewsJsonUtils;
+import com.ucon.newz.data.Articles;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.Sources;
 import com.ucon.newz.data.local.NewzDBContract;
@@ -82,7 +83,7 @@ public class NewzRemoteDataRepository implements NewsDataRepository.NewsDataRemo
 
             @Override
             protected void onPostExecute(ContentValues[] contentValues) {
-                List<Sources> sourcesList = new ArrayList<>();
+
                 if(contentValues != null){
                     mContext.getContentResolver().bulkInsert(
                             NewzDBContract.SourceEntry.CONTENT_URI,
@@ -98,24 +99,9 @@ public class NewzRemoteDataRepository implements NewsDataRepository.NewsDataRemo
                         null
                 );
 
-                if(cursor!=null || cursor.getCount() > 0){
-                    while (cursor.moveToNext()){
-                        int _ID = cursor.getInt(cursor.getColumnIndex(NewzDBContract.SourceEntry._ID));
-                        String name = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_NAME));
-                        String desc = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_DESC));
-                        String sourceId = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_SOURCE_ID));
-                        Sources sources = new Sources(_ID, name, desc, sourceId);
-                        sourcesList.add(sources);
-                    }
-                }
-
-                if(cursor != null){
-                    cursor.close();
-                }
-
 
                 try {
-                    loadSourceCallback.OnTaskLoaded(sourcesList);
+                    loadSourceCallback.OnTaskLoaded(Sources.getSourcesList(cursor));
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -159,7 +145,7 @@ public class NewzRemoteDataRepository implements NewsDataRepository.NewsDataRemo
 
 
                 Cursor cursor = mContext.getContentResolver().query(
-                        NewzDBContract.ArticlesEntry.buildArticleUri(sourceID,sortby),
+                        NewzDBContract.ArticlesEntry.buildArticleUri(sourceID, sortby),
                         null,
                         null,
                         new String[]{sourceID},
@@ -167,7 +153,7 @@ public class NewzRemoteDataRepository implements NewsDataRepository.NewsDataRemo
                 );
 
                 try {
-                    loadSourceCallback.OnTaskLoaded(cursor);
+                    loadSourceCallback.OnTaskLoaded(Articles.getArticlesList(cursor, sourceID));
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {

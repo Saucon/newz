@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 
+import com.ucon.newz.data.Articles;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.Sources;
 
@@ -36,7 +37,7 @@ public class NewzLocalDataRepository implements NewsDataRepository.NewsDataLocal
 
     @Override
     public void getSources(@NonNull NewsDataRepository.LoadSourceCallback loadSourceCallback) throws IOException, JSONException {
-        List<Sources> sourcesList = new ArrayList<>();
+
         Cursor cursor = mContext.getContentResolver().query(
                 NewzDBContract.SourceEntry.CONTENT_URI,
                 null,
@@ -45,26 +46,12 @@ public class NewzLocalDataRepository implements NewsDataRepository.NewsDataLocal
                 null
         );
 
-        if(cursor!=null || cursor.getCount() > 0){
-            while (cursor.moveToNext()){
-                int _ID = cursor.getInt(cursor.getColumnIndex(NewzDBContract.SourceEntry._ID));
-                String name = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_NAME));
-                String desc = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_DESC));
-                String sourceId = cursor.getString(cursor.getColumnIndex(NewzDBContract.SourceEntry.COLUMN_SOURCE_ID));
-                Sources sources = new Sources(_ID, name, desc, sourceId);
-                sourcesList.add(sources);
-            }
-        }
-
-        if(cursor != null){
-            cursor.close();
-        }
-
-        loadSourceCallback.OnTaskLoaded(sourcesList);
+        loadSourceCallback.OnTaskLoaded(Sources.getSourcesList(cursor));
     }
 
     @Override
     public void getArticles(@NonNull NewsDataRepository.LoadArticlesCallback loadSourceCallback, String sourceID, String sortby) throws IOException, JSONException {
+
         Cursor cursor = mContext.getContentResolver().query(
                 NewzDBContract.ArticlesEntry.buildArticleUri(sourceID,sortby),
                 null,
@@ -72,7 +59,8 @@ public class NewzLocalDataRepository implements NewsDataRepository.NewsDataLocal
                 new String[]{sourceID},
                 sortby
         );
-        loadSourceCallback.OnTaskLoaded(cursor);
+
+        loadSourceCallback.OnTaskLoaded(Articles.getArticlesList(cursor,sourceID));
     }
 
     @Override
@@ -84,7 +72,7 @@ public class NewzLocalDataRepository implements NewsDataRepository.NewsDataLocal
                 new String[]{sourceID,"%"+title+"%"},
                 sortby
         );
-        loadSourceCallback.OnTaskLoaded(cursor);
-    }
 
+        loadSourceCallback.OnTaskLoaded(Articles.getArticlesList(cursor, sourceID));
+    }
 }
