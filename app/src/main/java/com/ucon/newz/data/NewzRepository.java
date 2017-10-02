@@ -1,10 +1,9 @@
 package com.ucon.newz.data;
 
-import android.database.Cursor;
 import android.support.annotation.NonNull;
 
-import com.ucon.newz.data.Remote.NewzRemoteDataRepository;
-import com.ucon.newz.data.local.NewzLocalDataRepository;
+import com.ucon.newz.NewsSources.domain.model.Sources;
+import com.ucon.newz.NewzArticles.domain.model.Articles;
 
 import org.json.JSONException;
 

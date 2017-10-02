@@ -1,7 +1,6 @@
-package com.ucon.newz.NewsSources;
+package com.ucon.newz.NewsSources.Presentation;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ucon.newz.R;
-import com.ucon.newz.data.Sources;
-import com.ucon.newz.data.local.NewzDBContract;
+import com.ucon.newz.NewsSources.domain.model.Sources;
 
 import java.util.List;
 

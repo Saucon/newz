@@ -1,4 +1,4 @@
-package com.ucon.newz.data;
+package com.ucon.newz.NewzArticles.domain.model;
 
 import android.database.Cursor;
 

@@ -1,10 +1,8 @@
 package com.ucon.newz.NewzArticles;
 
-import android.database.Cursor;
-
 import com.ucon.newz.BasePresenter;
 import com.ucon.newz.BaseView;
-import com.ucon.newz.data.Articles;
+import com.ucon.newz.NewzArticles.domain.model.Articles;
 
 import org.json.JSONException;
 
@@ -25,6 +23,7 @@ public interface ArticlesContract {
         void loadArticles() throws IOException, JSONException;
         void loadArticlesRemote() throws IOException, JSONException;
         void loadArticlesFromSearch() throws IOException, JSONException;
+
         void getLoadArticlesParams(String sourceID, String sortby);
         void getTitleSearch(String title);
     }

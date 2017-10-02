@@ -4,15 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 
-import com.ucon.newz.data.Articles;
+import com.ucon.newz.NewzArticles.domain.model.Articles;
 import com.ucon.newz.data.NewsDataRepository;
-import com.ucon.newz.data.Sources;
+import com.ucon.newz.NewsSources.domain.model.Sources;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by saucon on 9/9/17.

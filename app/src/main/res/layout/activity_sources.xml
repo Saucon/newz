@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/coordinator"
-    tools:context="com.ucon.newz.NewsSources.SourcesActivity">
+    tools:context="com.ucon.newz.NewsSources.Presentation.SourcesActivity">
     <ProgressBar
         android:id="@+id/indeterminateBar"
         android:layout_width="wrap_content"

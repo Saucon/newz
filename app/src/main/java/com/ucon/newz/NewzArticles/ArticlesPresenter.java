@@ -1,8 +1,6 @@
 package com.ucon.newz.NewzArticles;
 
-import android.database.Cursor;
-
-import com.ucon.newz.data.Articles;
+import com.ucon.newz.NewzArticles.domain.model.Articles;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.NewzRepository;
 

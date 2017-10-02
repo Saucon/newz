@@ -3,6 +3,7 @@ package com.ucon.newz;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.ucon.newz.NewsSources.domain.UseCase.GetSources;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.NewzRepository;
 import com.ucon.newz.data.Remote.NewzRemoteDataRepository;
@@ -20,5 +21,13 @@ public class Injection {
         return NewzRepository.getInstance(
                 NewzLocalDataRepository.getInstance(context),
                 NewzRemoteDataRepository.getInstance(context));
+    }
+
+    public static GetSources provideGetSources(@NonNull Context context){
+        return new GetSources((NewzRepository) provideRepository(context));
+    }
+
+    public static UseCaseHandler  provideUseCaseHandler(@NonNull Context context){
+        return UseCaseHandler.getInstance();
     }
 }

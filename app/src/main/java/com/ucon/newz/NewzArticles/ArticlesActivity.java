@@ -1,7 +1,6 @@
 package com.ucon.newz.NewzArticles;
 
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
@@ -23,7 +22,7 @@ import android.widget.ProgressBar;
 
 import com.ucon.newz.Injection;
 import com.ucon.newz.R;
-import com.ucon.newz.data.Articles;
+import com.ucon.newz.NewzArticles.domain.model.Articles;
 
 import org.json.JSONException;
 

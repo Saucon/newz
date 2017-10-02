@@ -4,11 +4,12 @@ package com.ucon.newz;
  * Created by saucon on 9/14/17.
  */
 
-import com.ucon.newz.NewsSources.SourcesContract;
-import com.ucon.newz.NewsSources.SourcesPresenter;
+import com.ucon.newz.NewsSources.Presentation.SourcesContract;
+import com.ucon.newz.NewsSources.Presentation.SourcesPresenter;
+import com.ucon.newz.NewsSources.domain.UseCase.GetSources;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.NewzRepository;
-import com.ucon.newz.data.Sources;
+import com.ucon.newz.NewsSources.domain.model.Sources;
 
 import org.json.JSONException;
 import org.junit.Before;
@@ -44,14 +45,13 @@ public class SourcesPresenterTest {
     @Before
     public void setupSourcesPresenter(){
 
-
-
         MockitoAnnotations.initMocks(this);
 
-        mSourcesPresenter = new SourcesPresenter(mNewzReposiory, mSourcesView);
+        GetSources getSources = new GetSources(mNewzReposiory);
+        UseCaseHandler useCaseHandler = new UseCaseHandler(new TestUseCaseScheduler());
 
-        // Use your the mergeCursor as you would use your cursor.
-
+        mSourcesPresenter = new SourcesPresenter(mSourcesView,getSources
+        ,useCaseHandler);
     }
 
     @Test
@@ -64,7 +64,6 @@ public class SourcesPresenterTest {
             mLoadSourceCallbackCaptor.getValue().OnTaskLoaded(SOURCES);
 
             verify(mSourcesView).loadSourceView(SOURCES);
-
 
         } catch (IOException e) {
             e.printStackTrace();

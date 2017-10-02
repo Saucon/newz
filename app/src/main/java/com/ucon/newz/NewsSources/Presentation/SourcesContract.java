@@ -1,10 +1,8 @@
-package com.ucon.newz.NewsSources;
-
-import android.database.Cursor;
+package com.ucon.newz.NewsSources.Presentation;
 
 import com.ucon.newz.BasePresenter;
 import com.ucon.newz.BaseView;
-import com.ucon.newz.data.Sources;
+import com.ucon.newz.NewsSources.domain.model.Sources;
 
 import org.json.JSONException;
 

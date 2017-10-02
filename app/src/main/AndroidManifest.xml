@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewsSources.SourcesActivity"
+        <activity android:name=".NewsSources.Presentation.SourcesActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,11 @@
         </activity>
 
         <activity android:name=".NewzArticles.ArticlesActivity"
-            android:parentActivityName=".NewsSources.SourcesActivity"
+            android:parentActivityName=".NewsSources.Presentation.SourcesActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ucon.newz.NewsSources.SourcesActivity" />
+                android:value="com.ucon.newz.NewsSources.Presentation.SourcesActivity" />
         </activity>
 
         <provider

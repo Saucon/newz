@@ -1,4 +1,4 @@
-package com.ucon.newz.NewsSources;
+package com.ucon.newz.NewsSources.Presentation;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import com.ucon.newz.Injection;
 import com.ucon.newz.NewzArticles.ArticlesActivity;
 import com.ucon.newz.R;
-import com.ucon.newz.data.Sources;
+import com.ucon.newz.NewsSources.domain.model.Sources;
 
 import org.json.JSONException;
 
@@ -79,7 +79,6 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("first_time", true);
             editor.apply();
-
         }
 
 
@@ -115,7 +114,10 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     }
 
     private void initPresenter(){
-        mSourcesPresenter = new SourcesPresenter(Injection.provideRepository(this), this);
+        mSourcesPresenter = new SourcesPresenter(this,
+                Injection.provideGetSources(this),
+                Injection.provideUseCaseHandler(this)
+                );
         mSourcesPresenter.start();
     }
     private void showSnackNoCon(){
