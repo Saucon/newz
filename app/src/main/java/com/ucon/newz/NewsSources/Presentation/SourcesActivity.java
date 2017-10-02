@@ -116,6 +116,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     private void initPresenter(){
         mSourcesPresenter = new SourcesPresenter(this,
                 Injection.provideGetSources(this),
+                Injection.provideGetSourcesRemote(this),
                 Injection.provideUseCaseHandler(this)
                 );
         mSourcesPresenter.start();

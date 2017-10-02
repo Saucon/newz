@@ -2,6 +2,8 @@ package com.ucon.newz.data;
 
 import android.support.annotation.NonNull;
 
+import com.ucon.newz.NewsSources.domain.model.Sources;
+
 import org.json.JSONException;
 
 import java.io.IOException;

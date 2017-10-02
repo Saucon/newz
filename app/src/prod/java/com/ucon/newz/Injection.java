@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.ucon.newz.NewsSources.domain.UseCase.GetSources;
+import com.ucon.newz.NewsSources.domain.UseCase.GetSourcesRemote;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.NewzRepository;
 import com.ucon.newz.data.Remote.NewzRemoteDataRepository;
@@ -30,4 +31,11 @@ public class Injection {
     public static UseCaseHandler  provideUseCaseHandler(@NonNull Context context){
         return UseCaseHandler.getInstance();
     }
+
+    public static GetSourcesRemote provideGetSourcesRemote(@NonNull Context context){
+        return new GetSourcesRemote((NewzRepository) provideRepository(context));
+    }
+
+
+
 }

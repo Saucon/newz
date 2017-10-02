@@ -4,6 +4,7 @@ package com.ucon.newz.NewsSources.Presentation;
 import android.support.annotation.NonNull;
 
 import com.ucon.newz.NewsSources.domain.UseCase.GetSources;
+import com.ucon.newz.NewsSources.domain.UseCase.GetSourcesRemote;
 import com.ucon.newz.UseCase;
 import com.ucon.newz.UseCaseHandler;
 import com.ucon.newz.data.NewsDataRepository;
@@ -29,6 +30,7 @@ public class SourcesPresenter implements SourcesContract.Presenter {
     private final SourcesContract.View mSourceView;
     //use case
     private final GetSources mGetSources;
+    private final GetSourcesRemote mGetSourcesRemote;
 
     //use case handler
     private final UseCaseHandler mUseCaseHandler;
@@ -36,12 +38,14 @@ public class SourcesPresenter implements SourcesContract.Presenter {
 
     public SourcesPresenter(@NonNull SourcesContract.View sourceView,
                             @NonNull GetSources getSources,
+                            @NonNull GetSourcesRemote getSourcesRemote,
                             @NonNull UseCaseHandler useCaseHandler
                             ){
 //        mNewzRepository = (NewzRepository) newzRepository;
         mSourceView = sourceView;
 
         mGetSources = checkNotNull(getSources, "GetSources cant be null");
+        mGetSourcesRemote = checkNotNull(getSourcesRemote, "GetSourcesRemote cant be null ");
 
         mUseCaseHandler = checkNotNull(useCaseHandler, "UseCaseHandler cant be null");
 
@@ -72,13 +76,19 @@ public class SourcesPresenter implements SourcesContract.Presenter {
 
     @Override
     public void loadSourcesRemote() throws IOException, JSONException {
-//        mNewzRepository.getSourcesRemoteOnly(new NewsDataRepository.LoadSourceCallback() {
-//            @Override
-//            public void OnTaskLoaded(List<Sources> cursor) throws IOException, JSONException {
-//                mSourceView.loadSourceView(cursor);
-//                mSourceView.stopRefreshview();
-//            }
-//        });
+
+        mUseCaseHandler.execute(mGetSourcesRemote, new GetSourcesRemote.RequestValues(), new UseCase.UseCaseCallback<GetSourcesRemote.ResponseValues>() {
+            @Override
+            public void onSuccess(GetSourcesRemote.ResponseValues response) {
+                mSourceView.loadSourceView(response.getSources());
+                mSourceView.stopRefreshview();
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 
 

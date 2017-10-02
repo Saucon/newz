@@ -7,6 +7,7 @@ package com.ucon.newz;
 import com.ucon.newz.NewsSources.Presentation.SourcesContract;
 import com.ucon.newz.NewsSources.Presentation.SourcesPresenter;
 import com.ucon.newz.NewsSources.domain.UseCase.GetSources;
+import com.ucon.newz.NewsSources.domain.UseCase.GetSourcesRemote;
 import com.ucon.newz.data.NewsDataRepository;
 import com.ucon.newz.data.NewzRepository;
 import com.ucon.newz.NewsSources.domain.model.Sources;
@@ -48,10 +49,13 @@ public class SourcesPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         GetSources getSources = new GetSources(mNewzReposiory);
+        GetSourcesRemote getSourcesRemote = new GetSourcesRemote(mNewzReposiory);
         UseCaseHandler useCaseHandler = new UseCaseHandler(new TestUseCaseScheduler());
 
-        mSourcesPresenter = new SourcesPresenter(mSourcesView,getSources
-        ,useCaseHandler);
+        mSourcesPresenter = new SourcesPresenter(mSourcesView,
+                getSources,
+                getSourcesRemote,
+                useCaseHandler);
     }
 
     @Test
@@ -61,6 +65,25 @@ public class SourcesPresenterTest {
             mSourcesPresenter.loadSources();
 
             verify(mNewzReposiory).getSources(mLoadSourceCallbackCaptor.capture());
+            mLoadSourceCallbackCaptor.getValue().OnTaskLoaded(SOURCES);
+
+            verify(mSourcesView).loadSourceView(SOURCES);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void loadSourceRemoteTest(){
+
+        try {
+            mSourcesPresenter.loadSourcesRemote();
+
+            verify(mNewzReposiory).getSourcesRemoteOnly(mLoadSourceCallbackCaptor.capture());
             mLoadSourceCallbackCaptor.getValue().OnTaskLoaded(SOURCES);
 
             verify(mSourcesView).loadSourceView(SOURCES);
